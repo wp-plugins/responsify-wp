@@ -3,7 +3,7 @@ Contributors: stefanledin
 Tags: responsive images, picture, picture element, picture markup, picturefill, images, responsive background
 Requires at least: 3.8.1
 Tested up to: 4.0
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -130,6 +130,9 @@ possible to specify your own media queries.
 
 == Changelog ==
 
+= 1.4.3 =
+* Bugfix. If an image is beeing inserted by a shortcode, the generated markup could be replaced.
+
 = 1.4.2 =
 * Bugfix. On PHP 5.3.28, the plugin could make the site crash. Not anymore!
 
@@ -148,6 +151,9 @@ possible to specify your own media queries.
 * The content filter now works on PHP 5.3
 
 == Upgrade Notice ==
+
+= 1.4.3 =
+Bugfix. If an image is beeing inserted by a shortcode, the generated markup could be replaced.
 
 = 1.4.2 =
 Bugfix. On PHP 5.3.28, the plugin could make the site crash. Not anymore!
