@@ -17,14 +17,12 @@ class Element extends Picturefill
 			$default_attributes = array(
 				'picture' => array(),
 				'source' => array(),
-				'img' => array(
-					'alt' => $this->getImageMeta('alt')
-				)
+				'img' => array()
 			);
 		} else {
 			$default_attributes = array(
 				'picture_span' => array(
-					'data-alt' => $this->getImageMeta('alt')
+					'data-alt' => ($this->settings['attributes']['img']['alt']) ? $this->settings['attributes']['img']['alt'] : $this->getImageMeta('alt')
 				),
 				'src_span' => array()
 			);
