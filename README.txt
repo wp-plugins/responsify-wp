@@ -3,7 +3,7 @@ Contributors: stefanledin
 Tags: responsive images, picture, picture element, picture markup, picturefill, images, responsive background
 Requires at least: 3.8.1
 Tested up to: 4.0
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,18 +33,14 @@ But once you have activated the plugin, it will look like this instead:
 	<article>
 		<h1>Hello world</h1>
 		<p>Lorem ipsum dolor sit amet...</p>
-		<span data-picture data-alt="Image description">
-			<span data-src="example.com/wp-content/uploads/2014/03/IMG_4540-150x150.jpg"></span>
-			<span data-src="example.com/wp-content/uploads/2014/03/IMG_4540-300x199.jpg" data-media="(min-width: 150px)"></span>
-			<span data-src="example.com/wp-content/uploads/2014/03/IMG_4540-1024x681.jpg" data-media="(min-width: 300px)"></span>
-			<span data-src="example.com/wp-content/uploads/2014/03/IMG_4540.jpg" data-media="(min-width: 1024px)"></span>
-			<noscript>
-				<img src="example.com/wp-content/uploads/2014/03/IMG_4540-150x150.jpg" alt="Image description">
-			</noscript>
-		</span>
+		<img sizes="100vw"
+            srcset="example.com/wp-content/uploads/2014/03/IMG_4540-300x199.jpg 300w,
+            example.com/wp-content/uploads/2014/03/IMG_4540-1024x681.jpg 1024w,
+            example.com/wp-content/uploads/2014/03/IMG_4540.jpg <image-width>"
+            src="example.com/wp-content/uploads/2014/03/IMG_4540-150x150.jpg" alt="Image description">
 	</article>
 
-You can also choose to use the new ``picture`` element instead: 
+You can also choose to use the ``picture`` element instead:
 
 	<article>
 		<h1>Hello world</h1>
@@ -59,7 +55,7 @@ You can also choose to use the new ``picture`` element instead:
 
 The different versions of the image in the examples above is in the standard ``thumbnail``, ``medium``, ``large`` and ``full`` sizes. 
 The **media queries** are based on the width of the "previous" image.  
-Any **custom sizes** of the image will also be found and used.  
+Any **custom sizes** of the image will also be found and used.
 
 ### Settings
 You can **select which image sizes** that the plugin should use from the RWP settings page.  
@@ -102,6 +98,11 @@ But you don't want to send a big 1440px image to a mobile device. This can easil
 	<header>
 		<?php
 		$thumbnail_id = get_post_thumbnail_id( $post->ID );
+
+		// Generate an <img> tag with srcset/sizes attributes.
+		echo Picture::create( 'img', $thumbnail_id );
+
+		// Generate a <picture> element
 		echo Picture::create( 'element', $thumbnail_id );
 		?>
 	</header>
@@ -136,12 +137,16 @@ Full documentation and examples can be found at [GitHub](https://github.com/stef
 
 1. Select the image sizes that you want to use in your templates. It's also 
 possible to specify your own media queries.
-2. Use the Picture::create() function to generate Picturefill markup inside your templates.
+2. Use the Picture::create() function to generate responsive images inside your templates.
 3. Congratulations! A responsive header image.
 4. You can also use the Picture::create( 'style' ) function to generate CSS and media queries for large background images.
 5. A <style> tag will be created and contains the generated media queries for the background.
 
 == Changelog ==
+= 1.6.0 =
+* RWP now supports the sizes/srcset attributes. It's the new default markup pattern.
+* Bugfixes and improvements.
+
 = 1.5.2 =
 * Bugfix. Custom media queries works with the picture element now.
 
@@ -177,6 +182,9 @@ possible to specify your own media queries.
 * The content filter now works on PHP 5.3
 
 == Upgrade Notice ==
+= 1.6.0 =
+* Support for the sizes/srcset attributes. It's the default markup pattern now.
+
 = 1.5.2 =
 * Bugfix. Custom media queries works with the picture element now.
 
