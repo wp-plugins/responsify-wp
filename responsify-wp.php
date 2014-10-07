@@ -1,0 +1,81 @@
+<?php
+/*
+Plugin Name: Responsify WP
+Version: 1.6.0
+Description: A WordPress plugin that creates the markup for responsive images.
+Author: Stefan Ledin
+Author URI: http://stefanledin.com
+Plugin URI: https://github.com/stefanledin/responsify-wp
+*/
+
+require 'includes/media_queries.php';
+require 'includes/create_responsive_image.php';
+require 'includes/img.php';
+require 'includes/element.php';
+require 'includes/span.php';
+require 'includes/style.php';
+require 'includes/picture.php';
+require 'includes/content_filter.php';
+
+class Responsify_WP
+{
+	const VERSION = '1.6.0';
+
+	protected static $instance = null;
+
+    /**
+     * Adds actions and filters. Creates instance of Content_Filter.
+     */
+    public function __construct()
+	{
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        add_filter('plugin_action_links_'.plugin_basename(__FILE__), array( $this, 'settings_link' ) );
+		$content_filter = new Content_Filter;
+	}
+
+    /**
+     * Creates the singleton
+     *
+     * @return null|Responsify_WP
+     */
+    public static function get_instance()
+	{
+		if ( self::$instance == null ) {
+			self::$instance = new self;
+		}
+		return self::$instance;
+	}
+
+    /**
+     * Add settings link on plugin page.
+     *
+     * @param $links
+     * @return mixed
+     */
+    public function settings_link( $links ) {
+        $settings_link = '<a href="options-general.php?page=responsify-wp.php">Settings</a>';
+        array_unshift($links, $settings_link);
+        return $links;
+    }
+
+    /**
+     * Enqueues right version of Picturefill.
+     */
+    public function enqueue_scripts()
+	{
+		$selected_element = get_option( 'selected_element', 'img' );
+		if ( $selected_element == 'span' ) {
+            wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.1.2.1.js', __FILE__),  null, null, true);
+        } else {
+            wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.2.1.0.js', __FILE__),  null, null, true);
+        }
+	}
+
+}
+
+add_action( 'plugins_loaded', array( 'Responsify_WP', 'get_instance') );
+
+if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'admin/responsify-wp-admin.php' );
+	add_action( 'plugins_loaded', array( 'Responsify_WP_Admin', 'get_instance' ) );
+}
