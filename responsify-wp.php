@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Responsify WP
-Version: 1.6.3
+Version: 1.6.4
 Description: The WordPress plugin that cares about responsive images.
 Author: Stefan Ledin
 Author URI: http://stefanledin.com
@@ -11,7 +11,9 @@ Plugin URI: https://github.com/stefanledin/responsify-wp
 require 'includes/media_queries.php';
 require 'includes/create_responsive_image.php';
 require 'includes/img.php';
+require 'includes/native-img.php';
 require 'includes/element.php';
+require 'includes/native-element.php';
 require 'includes/span.php';
 require 'includes/style.php';
 require 'includes/picture.php';
@@ -19,7 +21,7 @@ require 'includes/content_filter.php';
 
 class Responsify_WP
 {
-	const VERSION = '1.6.2';
+	const VERSION = '1.6.4';
 
 	protected static $instance = null;
 
@@ -28,7 +30,9 @@ class Responsify_WP
      */
     public function __construct()
 	{
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        if ( get_option( 'rwp_picturefill', 'on' ) == 'on' ) {
+		  add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        }
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array( $this, 'settings_link' ) );
 		$content_filter = new Content_Filter;
 	}

@@ -3,16 +3,16 @@ Contributors: stefanledin
 Tags: responsive images, picture, picture element, picture markup, picturefill, images, responsive background
 Requires at least: 3.8.1
 Tested up to: 4.1
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Responsify WP helps you generate the markup required for responsive images. 
+Responsify WP cares about responsive images. So should you.
 
 == Description ==
 
-Responsify WP helps you with responsive images. It creates the markup required for [Picturefill](https://github.com/scottjehl/picturefill), a polyfill for the ``<picture>`` element.  
-In short, it will replace all ``<img>`` tags within ``the_content`` with the markup that is required by Picturefill.
+Responsify WP finds all images inside the_content() and makes them responsive.
+Thanks to the included Picturefill polyfill, you don't have to worry about browser support.  
 For example, you might have a template that looks like this:  
 
 	<article>
@@ -25,7 +25,7 @@ That will output something like this:
 	<article>
 		<h1>Hello world</h1>
 		<p>Lorem ipsum dolor sit amet...</p>
-		<img src="example.com/wp-content/uploads/2014/03/IMG_4540.jpg" alt="Image description">
+		<img src="large.jpg" alt="Image description">
 	</article>
 	
 But once you have activated the plugin, it will look like this instead:
@@ -34,10 +34,10 @@ But once you have activated the plugin, it will look like this instead:
 		<h1>Hello world</h1>
 		<p>Lorem ipsum dolor sit amet...</p>
 		<img sizes="100vw"
-            srcset="example.com/wp-content/uploads/2014/03/IMG_4540-300x199.jpg 300w,
-            example.com/wp-content/uploads/2014/03/IMG_4540-1024x681.jpg 1024w,
-            example.com/wp-content/uploads/2014/03/IMG_4540.jpg <image-width>"
-            src="example.com/wp-content/uploads/2014/03/IMG_4540-150x150.jpg" alt="Image description">
+            srcset="medium.jpg 300w,
+            large.jpg 1024w,
+            full-size.jpg <image-width>"
+            src="thumbnail.jpg" alt="Image description">
 	</article>
 
 You can also choose to use the ``picture`` element instead:
@@ -46,10 +46,10 @@ You can also choose to use the ``picture`` element instead:
 		<h1>Hello world</h1>
 		<p>Lorem ipsum dolor sit amet...</p>
 		<picture>
-		    <source srcset="example.com/wp-content/uploads/2014/03/IMG_4540.jpg" media="(min-width: 1024px)">
-		    <source srcset="example.com/wp-content/uploads/2014/03/IMG_4540-1024x681.jpg" media="(min-width: 300px)">
-		    <source srcset="example.com/wp-content/uploads/2014/03/IMG_4540-300x199.jpg" media="(min-width: 150px)">
-		    <img srcset="example.com/wp-content/uploads/2014/03/IMG_4540-150x150.jpg" alt="Image description">
+		    <source srcset="full-size.jpg" media="(min-width: 1024px)">
+		    <source srcset="large.jpg" media="(min-width: 300px)">
+		    <source srcset="medium.jpg" media="(min-width: 150px)">
+		    <img srcset="thumbnail.jpg" alt="Image description">
 		</picture>
 	</article>
 
@@ -145,6 +145,11 @@ possible to specify your own media queries.
 7.
 
 == Changelog ==
+= 1.6.4 =
+* Bugfix. The default value of the sizes attribute didn't work as expected in browsers with native support.
+* Minor bugfixes and improvements.
+* Added the ability to disable Picturefill.
+
 = 1.6.3 =
 * Updated Picturefill to version 2.2.0
 * Minor bugfixes
@@ -196,6 +201,11 @@ possible to specify your own media queries.
 * The content filter now works on PHP 5.3
 
 == Upgrade Notice ==
+= 1.6.4 = 
+* Bugfixes and improvements.
+* Added the ability to turn off Picturefill.
+
+= 1.6.3 =
 * Updated Picturefill to version 2.2.0
 * Minor bugfixes
 
