@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Responsify WP
-Version: 1.7.3
+Version: 1.8.0
 Description: Responsify WP is the WordPress plugin that cares about responsive images.
 Author: Stefan Ledin
 Author URI: http://stefanledin.com
@@ -17,11 +17,14 @@ require 'includes/native-element.php';
 require 'includes/span.php';
 require 'includes/style.php';
 require 'includes/picture.php';
+
+require 'includes/rwp_functions.php';
+
 require 'includes/content_filter.php';
 
 class Responsify_WP
 {
-	const VERSION = '1.7.3';
+	const VERSION = '1.8.0';
 
 	protected static $instance = null;
 
@@ -89,7 +92,7 @@ class Responsify_WP
 		if ( $selected_element == 'span' ) {
             wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.1.2.1.js', __FILE__),  null, null, true);
         } else {
-            wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.2.2.0.min.js', __FILE__),  null, null, true);
+            wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.2.3.1.min.js', __FILE__),  null, null, true);
         }
 	}
 }
