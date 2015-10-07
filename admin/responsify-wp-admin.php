@@ -22,7 +22,7 @@ class Responsify_WP_Admin
 
 	public function add_settings_to_menu()
 	{
-		$plask = add_options_page( 'Responsify WP', 'RWP Settings', 'manage_options', 'responsify-wp', array( $this, 'view_settings_page' ) );
+		add_options_page( 'Responsify WP', 'RWP Settings', 'manage_options', 'responsify-wp', array( $this, 'view_settings_page' ) );
 	}
 
 	public function enqueue_scripts()
@@ -48,6 +48,7 @@ class Responsify_WP_Admin
 		register_setting( 'responsify-wp-settings', 'selected_element' );
 		register_setting( 'responsify-wp-settings', 'ignored_image_formats' );
 		register_setting( 'responsify-wp-settings', 'rwp_custom_media_queries' );
+		register_setting( 'responsify-wp-settings', 'rwp_debug_mode' );
 	}
 
 }

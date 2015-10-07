@@ -100,7 +100,7 @@ class Content_Filter
 				$self->user_settings = $self->custom_media_queries->get_settings();
 			}
 
-			$src = $settings['attributes']['img']['src'];
+			$src = (isset($settings['attributes']['img']['src'])) ? $settings['attributes']['img']['src'] : '';
 			$settings['notBiggerThan'] = $src;
 			// We don't wanna have an src attribute on the <img>
 			unset($settings['attributes']['img']['src']);
@@ -117,9 +117,7 @@ class Content_Filter
 			// Create responsive image markup.
             $type = get_option( 'selected_element', 'img' );
             $element = Picture::create( $type, $id, $settings );
-            if ( has_filter( 'rwp_edit_generated_element' ) ) {
-            	$element = apply_filters( 'rwp_edit_generated_element', $element );
-            }
+
 			return $element;
 		}, $content);
 

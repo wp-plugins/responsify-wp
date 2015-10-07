@@ -1,14 +1,16 @@
 <?php
 /*
 Plugin Name: Responsify WP
-Version: 1.9.0
+Version: 1.9.3
 Description: Responsify WP is the WordPress plugin that cares about responsive images.
 Author: Stefan Ledin
 Author URI: http://stefanledin.com
 Plugin URI: https://github.com/stefanledin/responsify-wp
 */
 
+require 'includes/Logger.php';
 require 'includes/media_queries.php';
+require 'includes/retina.php';
 require 'includes/custom_media_query_rules.php';
 require 'includes/custom_media_queries.php';
 require 'includes/create_responsive_image.php';
@@ -26,7 +28,7 @@ require 'includes/content_filter.php';
 
 class Responsify_WP
 {
-	const VERSION = '1.9.0';
+	const VERSION = '1.9.3';
 
 	protected static $instance = null;
 
@@ -63,7 +65,9 @@ class Responsify_WP
     {
         $default_filters = array( 'the_content' => 'on', 'post_thumbnail_html' => 'on' );
         $filters = get_option( 'rwp_added_filters', $default_filters );
-        $filters = array_keys($filters);
+        if ( is_array($filters) ) {
+            $filters = array_keys($filters);
+        }
         if ( has_filter( 'rwp_add_filters' ) ) {
             $filters = apply_filters( 'rwp_add_filters', $filters );
         }
@@ -94,7 +98,7 @@ class Responsify_WP
 		if ( $selected_element == 'span' ) {
             wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.1.2.1.js', __FILE__),  null, null, true);
         } else {
-            wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.2.3.1.min.js', __FILE__),  null, null, true);
+            wp_enqueue_script( 'picturefill', plugins_url('/src/picturefill.3.0.1.min.js', __FILE__),  null, null, true);
         }
 	}
 }

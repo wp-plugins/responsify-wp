@@ -7,7 +7,8 @@
 		<a href="#retina">Retina</a> | 
 		<a href="#custom-media-queries">Custom media queries</a> | 
 		<a href="#ignored-image-formats">Ignored image formats</a> | 
-		<a href="#picturefill">Picturefill</a>
+		<a href="#picturefill">Picturefill</a> |
+		<a href="#debug-mode">Debug mode</a>
 	</p>
 	<form method="post" action="options.php">
 		<script type="text/javascript">
@@ -33,6 +34,8 @@
 		include 'ignored_image_formats.php';
 		
 		include 'picturefill.php';
+		
+		include 'debug_mode.php';
 		?>
 		<div class="postbox">
 			<div class="inside">
